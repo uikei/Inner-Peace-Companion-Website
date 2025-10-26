@@ -1,0 +1,349 @@
+/* ====== General ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+}
+
+body {
+  background: linear-gradient(120deg, #e9f0ec, #dce7df, #e9f0ec);
+  background-color: #EAEEEB;
+  background-size: 300% 300%;
+  animation: backgroundShift 12s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0% { background-position: 0% 50%; };
+    50% { background-position: 100% 50%; };
+    100% { background-position: 0% 50%; };
+}
+
+/* ----- Smooth Scroll Effect ----- */
+html{
+    scroll-behavior: smooth;
+}
+
+/* ------- Subtle Fade In Animation for Section ----- */
+section {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s forwards;
+}
+
+section:nth-child(1) { animation-delay : 0.2s;}
+section:nth-child(2) { animation-delay : 0.4s;}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* ====== Navbar ====== */
+.navbar {
+    background-color: #889B7E;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 40px; /*spacing between nav and Login button */
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+}
+
+.navbar li {
+    display: inline;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s, transform 0.3s;
+    position: relative;
+
+}
+
+.navbar a:hover {
+    color: #fff3e0; /* Light hover color */
+    transform: scale(1.05);  /* Scale effect on hover */
+}
+
+.navbar a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s;
+    bottom: -5px;
+    left: 0;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/* ====== Logo ===== */
+/* ====== Floating Logo Effect ===== */
+.logo img {
+    height: 90px;
+    width: 90px;
+    object-fit: contain;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.3s;
+    animation: floatLogo 5s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    
+}
+
+.logo:hover img {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+/* ====== Login Button ====== */
+.login-btn {
+    background-color: #d9e5d9;
+    color: #333;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-btn:hover {
+    background-color: #c3d3c3;
+    transform: translateY(-2px);     /* Scale effect on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== Main Content ====== */
+.problem-solution h1 {
+    font-size: 3em;
+    color: #3a4a3f;
+    margin-bottom: 35px;
+    text-align: center;
+}
+.problem-solution {
+  width: 100%;
+  background: rgba(249, 250, 249, 0.9);         /* Slightly transparent background */
+  padding: 80px 10%;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  margin-bottom: 60px;
+}
+
+.problem-solution h2 {
+  font-size: 2em;
+  color: #3a4a3f;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.problem-solution span{
+    color: #7d9b7e;
+}
+
+.problem-solution p{
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+    margin-bottom: 35px;
+}
+
+.problem,
+.solution{
+    margin-bottom: 30px;
+    padding: 10px 0;
+    border-bottom: 1px solid #dcdcdc;
+
+}
+
+.solution{
+    border-bottom: none;
+}
+
+/* ------ Feature Section ------ */
+.features{
+    width: 100%;
+    background: rgba(245, 248, 245, 0.9);         /* Slight transparency */
+    padding: 80px 10%;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.features h2{
+    font-size: 2.4em;
+    color: #2f4f3e;
+    margin-bottom: 50px;        /* Reduced margin */
+    font-weight: 700;
+}
+
+.feature-card{
+    background-color: #edf4ec;
+    padding: 30px 25px;
+    border-radius: 16px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.feature-card:hover{
+    transform: translateY(-5px);
+    background-color: #e3eee3;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card h3{
+    color: #3a5c47;
+    font-size: 1.4em;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.feature-card p{
+    color: #555;
+    font-size: 1.05em;
+    line-height: 1.7;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.info-text {
+  flex: 1 1 550px;
+  color: #444;
+}
+
+.info-text h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #2f4f3e;
+}
+
+.info-text h2 span {
+  color: #6c8e74;
+}
+
+.info-text p {
+  font-size: 1.1em;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #555;
+  text-align: justify;
+}
+
+/* ====== Features Section ====== */
+.features {
+  width: 100%;
+  background: #f5f8f5;
+  padding: 80px 10%;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 2.4em;
+  color: #2f4f3e;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background-color: #edf4ec;
+  padding: 30px 25px;
+  border-radius: 16px;
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  background-color: #e3eee3;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card h3 {
+  color: #3a5c47;
+  font-size: 1.4em;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.feature-card p {
+  color: #555;
+  font-size: 1.05em;
+  line-height: 1.7;
+}
+
+/* ====== Footer Styles ====== */
+footer {
+    background-color: #a9bfa0;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: white;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  .features {
+    padding: 60px 6%;
+  }
+
+  .features h2 {
+    font-size: 2em;
+  }
+
+  .feature-card {
+    padding: 25px 20px;
+  }
+}

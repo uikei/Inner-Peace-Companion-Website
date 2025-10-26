@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Basic document setup - tells browser how to handle the page -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Account</title>
+
+    <!--- GOogle Fonts --->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="../frontend/Login&SignUp.css" />
+  </head>
+  <body>
+    <!--- Header -->
+    <header class="navbar">
+      <div class="logo">
+        <a href="../frontend/LandingPage.html">
+          <img class="logo" src="../src/image/logo/logo.png" alt="Logo" />
+        </a>
+      </div>
+    </header>
+
+    <!-- Login Form -->
+    <main class="container">
+      <div class="form-box">
+        <h2>Login</h2>
+        <form action="../backend/Login.php" method="post">
+          <label>Username</label>
+          <input
+            type="text"
+            name="Username"
+            placeholder="Enter username..."
+            required
+          />
+
+          <label>Password</label>
+          <input
+            type="password"
+            name="Password"
+            placeholder="Enter password..."
+            required
+          />
+
+          <!-- Remember Me Tick Box && Forgotten Password -->
+          <div class="options">
+            <label><input type="checkbox" name="Remember" />Remember Me</label>
+            <a href="../frontend/ForgotPassword.html">Forgotten Password?</a>
+          </div>
+
+          <button type="submit" class="btn">Login</button>
+
+          <p class="switch-page">
+            Don't have an account?
+            <a href="../frontend/SignUp.html">Create an Account</a>
+          </p>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
