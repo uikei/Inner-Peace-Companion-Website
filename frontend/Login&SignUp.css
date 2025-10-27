@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+
+/* ====== General Page Setup ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif; 
+    font-weight: 700;
+}
+
+body {
+    background-color:  #EAEEEB;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ====== Logo ===== */
+.navbar {
+    background-color: #889b7e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    height: 90px;
+    width: 90px;
+    object-fit: contain;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.3s;
+    animation: floatLogo 5s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+}
+
+/* ====== Header ====== */
+.navbar {
+    background-color: #889B7e; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 40px; /*spacing between nav and Login button */
+}
+
+.navbar a { 
+    color : white;
+    text-decoration : none;
+    font-size: 14px;
+    transition : 0.3s;
+}
+
+.navbar a:hover{
+    text-decoration: underline;
+}
+
+/*====== Form Box ======*/
+.container {
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    flex : 1;
+    padding: 40px 0;
+}
+
+.form-box {
+    background-color: #e5e5e5;
+    padding: 40px 50px;
+    border-radius: 30px;
+    border : 2px solid black;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: 600px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.form-box h2{
+    margin-bottom: 25px;
+    font-size: 22px;
+    color : #222;
+}
+
+.form-box p {
+    text-align: left;
+    width: 100%;
+}
+
+/*====== Form Elements ======*/
+form {
+    display : flex;
+    flex-direction : column;
+    align-items: stretch;
+}
+
+label{
+    text-align: left;
+    margin: 10px 0 5px; 
+    font-size: 12px;
+    color : #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #889B7E;
+  box-shadow: 0 0 5px rgba(136,155,126,0.4);
+}
+
+/* ====== Options (checkbox + forgot password) ====== */
+.options{
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.option label{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.forgot-link{
+    text-decoration: none;
+    color : #3a74f9;
+}
+
+.forgot-link:hover{
+    text-decoration: underline;
+}
+
+/* ====== Buttons ====== */
+.btn {
+    background-color: #b5edbd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    height: 40px;
+    padding: 12px;
+    border : none;
+}
+
+.btn:hover{
+    background-color: #38ff6a;
+}
+
+/* ====== Email Send/Verify for SignUp page ====== */
+.email-grp{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.email-grp input {
+    flex: 1;
+}
+
+.small-btn {
+    background-color: #a0bbee;
+    border : none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.small-btn:hover{
+    background-color: #90aee0;
+}
+
+/* ====== Swicth Page Links ====== */
+.switch-page {
+    margin-top: 15px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.switch-page a {
+    color : #3a74f9;
+    text-decoration: none;
+}
+
+.switch-page a:hover{
+    text-decoration: underline;;
+}
+
+
+/* Mobile Friendly */
+@media (max-width: 768px){
+    .navbar{
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    .navbar ul{
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .form-box{
+        width: 90%;
+        padding: 25px 20px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        font-size: 14px;
+    }
+
+    .btn,
+    .small-btn{
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .scroll-up{
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+}

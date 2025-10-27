@@ -1,0 +1,206 @@
+:root {
+    --bg: #EAEEEB; /* Background color for the entire page */
+    --player-bg: #dbe9d9; /* Background color for the player */
+    --text-dark: #3d3d2f; /* Dark text color */
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Manrope", system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: #222;
+}
+
+.page-layout {
+  background: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+  max-width: 1251px;
+  margin-left: 200px;
+}
+
+/* Main Content */
+.relax-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ---------------- Banner --------------- */
+.banner-container {
+  width: 100%;
+  height: 230px;
+  overflow: hidden;
+}
+
+.banner-gif{
+  width: 100%;
+  height: 100%;
+  object-fit:cover; 
+}
+
+/* ----------------- TItle/Description ------------------- */
+.content-container {
+  text-align: center;
+  margin-top: 12px;
+  padding-bottom: 10px;
+}
+
+.headphone-container{
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.headphone-image {
+  width: 70px;
+  height: 70px;
+}
+
+.title {
+  font-size: 2.23rem;
+  color: #40350A;
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+.description {
+  color: rgba(75, 85, 99, 0.6);
+  font-size: 0.95rem;
+}
+
+/* ---------------- Track Cards ---------------- */
+.tracks-section {
+  width: 90%;
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: 100px;
+}
+
+.track-card {
+  position: relative;
+  height: 100px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.28s ease;
+}
+
+.track-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.track-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.track-title {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  font-size: 22px;
+  color: #fff; /* White for track title */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+  font-weight: 600;
+}
+
+.track-btn {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  border-radius: 50%;
+  padding: 11px;
+  cursor: pointer;
+}
+
+.track-btn img {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------------- Player Bar ---------------- */
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 200px; 
+  right: 0;
+  height: 70px;
+  background: var(--player-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.player{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-cover {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.player-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #3e3e3e;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.player-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.18s;
+}
+
+.player-controls button:hover {
+  transform: scale(1.12);
+}
+
+.player-controls img {
+  width: 24px;
+}
+
+.player-time {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-time input[type="range"] {
+  width: 140px;
+  accent-color: #7fa27b;
+}
+
+.player-time span {
+  font-size: 14px;
+}

@@ -13,7 +13,7 @@ $user_image = ''; // Default avatar
 if ($user_id) {
     // Include your database connection
     // require_once 'config/db_connect.php';
-    
+
     // Example query (adjust based on your database structure)
     // $query = "SELECT name, profile_image FROM users WHERE id = ?";
     // $stmt = $conn->prepare($query);
@@ -37,14 +37,16 @@ if ($user_id && !empty($user_image)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         * {
             font-family: 'Manrope', sans-serif;
@@ -52,25 +54,31 @@ if ($user_id && !empty($user_image)) {
 
         /* Ring animation for phone button */
         @keyframes ring {
-            0% { 
+            0% {
                 transform: rotate(0deg) scale(1);
             }
-            10% { 
+
+            10% {
                 transform: rotate(15deg) scale(1.05);
             }
-            20% { 
+
+            20% {
                 transform: rotate(-15deg) scale(1.1);
             }
-            30% { 
+
+            30% {
                 transform: rotate(15deg) scale(1.05);
             }
-            40% { 
+
+            40% {
                 transform: rotate(-15deg) scale(1.1);
             }
-            50% { 
+
+            50% {
                 transform: rotate(0deg) scale(1);
             }
-            100% { 
+
+            100% {
                 transform: rotate(0deg) scale(1);
             }
         }
@@ -88,7 +96,8 @@ if ($user_id && !empty($user_image)) {
 
         .phone-btn-blur {
             position: absolute;
-            top: 50%; /* Center it */
+            top: 50%;
+            /* Center it */
             left: 50%;
             width: 100%;
             height: 100%;
@@ -97,10 +106,10 @@ if ($user_id && !empty($user_image)) {
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
-            transform: translate(-50%, -50%) scale(1.15); 
+            transform: translate(-50%, -50%) scale(1.15);
             transform-origin: center;
             z-index: 1;
-        }         
+        }
 
         .phone-btn-icon {
             position: relative;
@@ -122,7 +131,8 @@ if ($user_id && !empty($user_image)) {
         .phone-btn-icon img {
             width: 30px;
             height: 30px;
-            filter: none; /* Ensure icon stays sharp */
+            filter: none;
+            /* Ensure icon stays sharp */
         }
 
         /* Profile button with blur effect */
@@ -165,7 +175,8 @@ if ($user_id && !empty($user_image)) {
 
         .profile-btn-icon img,
         .profile-btn-icon svg {
-            filter: none; /* Ensure image/icon stays sharp */
+            filter: none;
+            /* Ensure image/icon stays sharp */
         }
 
         /* Modal styling */
@@ -199,8 +210,13 @@ if ($user_id && !empty($user_image)) {
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideUp {
@@ -208,6 +224,7 @@ if ($user_id && !empty($user_image)) {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -269,12 +286,14 @@ if ($user_id && !empty($user_image)) {
         .profile-dropdown {
             display: none;
             position: absolute;
-            top: 96px; /* Position below the header */
-            right: 2px; /* Move more to the right */
+            top: 96px;
+            /* Position below the header */
+            right: 2px;
+            /* Move more to the right */
             width: 160px;
             height: 180px;
             border: 1px solid #40350A;
-            background: #8D9E82; 
+            background: #8D9E82;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             flex-shrink: 0;
@@ -290,6 +309,7 @@ if ($user_id && !empty($user_image)) {
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -297,7 +317,7 @@ if ($user_id && !empty($user_image)) {
         }
 
         .dropdown-item {
-            color: #F5F2E9; 
+            color: #F5F2E9;
             padding: 16px 20px;
             cursor: pointer;
             transition: all 0.2s;
@@ -305,7 +325,8 @@ if ($user_id && !empty($user_image)) {
         }
 
         .dropdown-item.logout-item {
-            border-top: 1px solid #000; /* Black line before logout */
+            border-top: 1px solid #000;
+            /* Black line before logout */
         }
 
         .dropdown-item:hover {
@@ -323,6 +344,7 @@ if ($user_id && !empty($user_image)) {
         }
     </style>
 </head>
+
 <body>
     <header class="w-full bg-[#889B7E] fixed top-0 left-0 z-40" style="height: 95px;"> 
         <div class="max-w-[1727px] h-full mx-auto px-8 flex items-center justify-between">
@@ -346,10 +368,9 @@ if ($user_id && !empty($user_image)) {
                 <div class="profile-btn-container" onclick="toggleProfileDropdown()">
                     <div class="profile-btn-blur"></div>
                     <button id="profileBtn" class="profile-btn-icon">
-                        <img src="<?php echo htmlspecialchars($profile_pic); ?>" 
-                        alt="Profile" 
-                        class="w-[50px] h-[50px] object-cover rounded-full"
-                        onerror="this.src='../src/ui/default-avatar.png'"> <!-- Fallback if image fails to load -->
+                        <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="Profile"
+                            class="w-[50px] h-[50px] object-cover rounded-full"
+                            onerror="this.src='../src/ui/default-avatar.png'"> <!-- Fallback if image fails to load -->
                     </button>
                 </div>
             </div>
@@ -358,18 +379,18 @@ if ($user_id && !empty($user_image)) {
         <!-- Profile Dropdown Menu -->
         <div id="profileDropdown" class="profile-dropdown">
             <div class="flex flex-col h-full justify-center">
-                
-                <a href="settings.php" class="dropdown-item flex items-center justify-center gap-3">
+
+                <a href="Setting.php" class="dropdown-item flex items-center justify-center gap-3">
                     <span class="font-bold text-lg">Settings</span>
                 </a>
 
-                <a href="edit_profile.php" class="dropdown-item flex items-center justify-center gap-3">
+                <a href="Edit_Profile.php" class="dropdown-item flex items-center justify-center gap-3">
                     <span class="font-bold text-lg">Edit Profile</span>
                 </a>
 
-                 <a href="logout.php" class="dropdown-item logout-item flex items-center justify-center gap-3">
-                     <span class="font-bold text-lg">Logout</span>
-                 </a>
+                <a href="Logout.php" class="dropdown-item logout-item flex items-center justify-center gap-3">
+                    <span class="font-bold text-lg">Logout</span>
+                </a>
             </div>
         </div>
         <!-- Warning Modal -->
@@ -408,7 +429,7 @@ if ($user_id && !empty($user_image)) {
         }
 
         // Close modal when clicking outside
-        warningModal.addEventListener('click', function(e) {
+        warningModal.addEventListener('click', function (e) {
             if (e.target === warningModal) {
                 cancelCall();
             }
@@ -421,10 +442,10 @@ if ($user_id && !empty($user_image)) {
         }
 
         // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             const dropdown = document.getElementById('profileDropdown');
             const profileBtn = document.getElementById('profileBtn');
-            
+
             if (!profileBtn.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('show');
             }
@@ -437,4 +458,5 @@ if ($user_id && !empty($user_image)) {
         }, 5000);
     </script>
 </body>
+
 </html>
