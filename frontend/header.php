@@ -324,7 +324,7 @@ if ($user_id && !empty($user_image)) {
     </style>
 </head>
 <body>
-    <header class="w-full bg-[#889B7E] relative" style="height: 95px;"> 
+    <header class="w-full bg-[#889B7E] fixed top-0 left-0 z-40" style="height: 95px;"> 
         <div class="max-w-[1727px] h-full mx-auto px-8 flex items-center justify-between">
             <!-- Logo Section -->
             <div class="flex items-center">
