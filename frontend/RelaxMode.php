@@ -38,7 +38,7 @@
 
             <!-- Track Section (cards act as category selectors) -->
             <section class="tracks-section">
-                <div class="track-card" data-category="mediate">
+                <div class="track-card" data-category="meditate">
                     <img src="../src/image/cover/mediate.jpeg" alt="Meditate" class="track-bg">
                     <span class="track-title">Mediate</span>
                     <button class="track-btn" aria-label="Play Meditate"><img src="../src/ui/playBtn.png"
@@ -61,12 +61,12 @@
             </section>
         </main>
         <!-- Mini Player - hidden until a category is clicked -->
-        <footer class="player-bar" class="player-bar hidden">
+        <footer id="player-bar" class="player-bar">
             <div class="player">
-                <img src="../src/image/cover/calm.jpeg" alt="Cover" class="player-cover">
+                <img id="playerCover" src="../src/image/cover/calm.jpeg" alt="Cover" class="player-cover">
                 <div class="player-meta">
-                    <div class="playerTitle" class="player-title">Title</div>
-                    <div class="playerArtist" class="player-artist"></div>
+                    <div id="playerTitle" class="player-title">Title</div>
+                    <div id="playerArtist" class="player-artist"></div>
                 </div>
             </div>
 
@@ -85,7 +85,7 @@
             <div class="player-time">
                 <span id="currentTime">0:00</span>
                 <input id="progressBar" type="range" min="0" max="100" value="0" step="1">
-                <span>0:00</span>
+                <span id="duration">0:00</span>
             </div>
         </footer>
         <!-- hidden audio element controlled by JS -->

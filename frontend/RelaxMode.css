@@ -1,7 +1,9 @@
 :root {
-    --bg: #EAEEEB; /* Background color for the entire page */
-    --player-bg: #dbe9d9; /* Background color for the player */
-    --text-dark: #3d3d2f; /* Dark text color */
+    --bg: #EAEEEB;
+    --player-bg: #dbe9d9;
+    --text-dark: #3d3d2f;
+    --accent-color: #40350A;
+    --muted-text: rgba(75,85,99, 0.6);
 }
 
 * {
@@ -14,6 +16,7 @@
 body {
   background: var(--bg);
   color: #222;
+  overflow-x: hidden;
 }
 
 .page-layout {
@@ -22,8 +25,9 @@ body {
   border-top-right-radius: 12px;
   overflow: hidden;
   background-color: white;
-  max-width: 1251px;
+  max-width: 1351px;
   margin-left: 200px;
+  min-height: 100vh;
 }
 
 /* Main Content */
@@ -32,175 +36,268 @@ body {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 10px 30px 20px 30px;
+  gap: 15px; /* Reduced gap */
 }
 
 /* ---------------- Banner --------------- */
 .banner-container {
   width: 100%;
-  height: 230px;
+  height: 150px;
+  margin-bottom: 0;
   overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  margin-top: 0;
 }
 
 .banner-gif{
   width: 100%;
   height: 100%;
   object-fit:cover; 
+  display: block;
+  border-radius: 12px;
 }
 
-/* ----------------- TItle/Description ------------------- */
-.content-container {
-  text-align: center;
-  margin-top: 12px;
-  padding-bottom: 10px;
-}
-
-.headphone-container{
-  margin-top: 18px;
+/* ---------------- Icon Container (Middle) --------------- */
+.icon-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin: 10px 0; /* Reduced margin */
+  position: relative;
+  z-index: 2;
+}
+
+.headphone-icon {
+  background: white;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.headphone-icon img{
+  width: 40px;
+  height: 40px;
+}
+
+.headphone-text{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .headphone-image {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
+}
+
+/* ---------------- Content Header --------------- */
+.content-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 .title {
-  font-size: 2.23rem;
-  color: #40350A;
-  margin-top: 8px;
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin: 0;
   font-weight: 700;
+  line-height: 1;
 }
 
 .description {
-  color: rgba(75, 85, 99, 0.6);
-  font-size: 0.95rem;
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
 }
 
 /* ---------------- Track Cards ---------------- */
 .tracks-section {
-  width: 90%;
-  margin-top: 28px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding-bottom: 100px;
+  gap: 12px;
+  width: 100%;
 }
 
 .track-card {
   position: relative;
-  height: 100px;
+  height: 80px;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: 0.28s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .track-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  transform: scale(1.01);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .track-bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.85;
+  opacity: 0.88;
+  display: block;
+  border-radius: 16px;
 }
 
 .track-title {
   position: absolute;
-  left: 18px;
+  left: 16px;
   top: 50%;
-  font-size: 22px;
-  color: #fff; /* White for track title */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #fff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
   font-weight: 600;
 }
 
 .track-btn {
   position: absolute;
-  right: 20px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(248, 243, 231, 0.9);
   border: none;
   border-radius: 50%;
-  padding: 11px;
+  padding: 8px;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-btn:hover{
+  transform: translateY(-50%) scale(1.08);
 }
 
 .track-btn img {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
+}
+
+.track-card.playing {
+  outline: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 /* ---------------- Player Bar ---------------- */
 .player-bar {
   position: fixed;
-  bottom: 0;
-  left: 200px; 
-  right: 0;
-  height: 70px;
+  bottom: 12px;
+  left: 200px;
+  right: 12px;
+  height: 60px;
   background: var(--player-bg);
+  color: var(--text-dark);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 25px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
 
-.player{
+.player-bar.hidden {
+  display: none;
+}
+
+.player-bar:not(.hidden) {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.player {
   display: flex;
+  gap: 10px;
   align-items: center;
-  gap: 12px;
 }
 
 .player-cover {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
   object-fit: cover;
 }
 
-.player-title {
-  font-weight: 600;
-  font-size: 16px;
-  color: #3e3e3e;
+.player-meta { 
+  min-width: 120px; 
+}
+
+.player-title { 
+  font-weight: 600; 
+  font-size: 14px; 
+  color: var(--text-dark); 
+}
+
+.player-artist { 
+  font-size: 11px; 
+  color: var(--muted-text); 
+  margin-top: 1px; 
 }
 
 .player-controls {
   display: flex;
+  gap: 12px;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
 }
 
-.player-controls button {
-  background: none;
+.control-btn {
+  background: transparent;
   border: none;
   cursor: pointer;
-  transition: 0.18s;
+  padding: 6px;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
 }
 
-.player-controls button:hover {
-  transform: scale(1.12);
+.control-btn img { 
+  width: 20px; 
+  height: 20px; 
 }
 
-.player-controls img {
-  width: 24px;
+.control-btn:hover { 
+  transform: scale(1.06); 
 }
 
 .player-time {
   display: flex;
+  gap: 8px;
   align-items: center;
-  gap: 10px;
 }
 
 .player-time input[type="range"] {
-  width: 140px;
+  width: 100px;
   accent-color: #7fa27b;
 }
 
 .player-time span {
-  font-size: 14px;
+  color: var(--text-dark);
+  font-size: 11px;
+}
+
+.hidden {
+  display: none !important;
 }
