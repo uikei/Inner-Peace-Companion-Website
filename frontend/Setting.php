@@ -1,13 +1,18 @@
 <?php
 session_start();
 
-$username = $_SESSION['signup_username'] ?? null;
+$username = $_SESSION['user_username'] ?? null;
 
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
+
     <title>Settings</title>
     <style>
         body {
@@ -46,6 +51,11 @@ $username = $_SESSION['signup_username'] ?? null;
             color: white;
         }
 
+        .report {
+            background: #889B7E;
+            color: white;
+        }
+
         .logout {
             background: #B14E4E;
             color: white;
@@ -60,8 +70,9 @@ $username = $_SESSION['signup_username'] ?? null;
     <div class="container">
         <h2>Hello, <?php echo $username; ?></h2>
 
-        <button class="btn edit" onclick="window.location.href='edit_profile.php'">Edit Profile</button>
-        <button class="btn logout" onclick="window.location.href='logout.php'">Logout</button>
+        <button class="btn edit" onclick="window.location.href='Edit_Profile.php'">Edit Profile</button>
+        <button class="btn report" onclick="window.location.href='report.php'">Generate Report</button>
+        <button class="btn logout" onclick="window.location.href='Logout.php'">Logout</button>
     </div>
 
 </body>

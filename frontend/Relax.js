@@ -16,13 +16,13 @@ const playerTitle = document.getElementById('playerTitle');
 const playerArtist = document.getElementById('playerArtist');
 
 let currentCategory = null; 
-let currentIndex = 0; 
+let currentIndex = 0; // don’t randomize here yet
 let isPlaying = false;
 
-// --- PLAYLIST DATA (You can add more anytime) --- 
+// --- PLAYLIST DATA (Make all the playlist as random) --- 
 const playlists = {
     meditate: [ 
-        "A Stroll - The Grey Room_Density & Time.mp3", 
+        "A Stroll - The Grey Room _ Density & Time.mp3", 
         "Bodega Cat - Dyalla.mp3", "Charm - Anno Domini Beats.mp3", 
         "Chosen - Anno Domini Beats.mp3", 
         "Circa 1983 - Freedom Trail Studio.mp3", 
@@ -81,7 +81,7 @@ const playlists = {
     ],
     calm: [ 
         "Akatsuki Rising - The Mini Vandals.mp3", 
-        "Anomori Wings - The Mini Vandals.mp3", 
+        "Aomori Wings - The Mini Vandals.mp3", 
         "Call me crazy - Pratrick Patrikios.mp3", 
         "Circuit Rush - The Mini Vandals.mp3", 
         "City lights - Patrick Patrikios.mp3", 
@@ -114,8 +114,9 @@ const playlists = {
 };
 
 function filePath(category, filename) {
-    return `../src/music/${category}/${encodeURIComponent(filename)}`;
+  return `../src/music/${category}/${encodeURIComponent(filename)}`.replace(/%26/g, '&');
 }
+
 
 //Show Player Bar
 function showPlayer(){
@@ -132,23 +133,30 @@ function basenameNoExt(filename){
 }
 
 // Load song by category + index
+// Load song by category + index
 function loadSong(category, index){ 
-    if (!playlists[category] || !playlists[category][index]) 
-        return false; 
+    if (!playlists[category] || !playlists[category][index]) return false;
+
     const filename = playlists[category][index];
-    //set audio src
-    audio.src = filePath(category, filename); 
+
+    // ✅ SET TITLE HERE (remove .mp3 extension)
+    playerTitle.textContent = filename.replace(".mp3", ""); 
+
+    // set audio src
+    audio.src = filePath(category, filename);
     audio.load();
-    //set UI cover 
+
+    // set UI cover
     const candidateCover = `../src/image/cover/${category}.jpeg`; 
     playerCover.src = candidateCover;
+
     playerArtist.textContent = ""; 
-    //reset progress UI
     progressBar.value = 0; 
     currentTimeEl.textContent = "0:00"; 
     durationEl.textContent = "0:00"; 
     return true;
 }
+
 
 function playSong() {
     if (!audio.src) return;
@@ -179,36 +187,47 @@ function nextTrack(){
     currentIndex = (currentIndex + 1) % list.length;
     if (loadSong(currentCategory, currentIndex)) playSong();
 }
-// click handlers for cards
-document.querySelectorAll('.track-card').forEach(card=>{
-    const btn = card.querySelector('.track-btn');
-    const category = card.dataset.category;
-    const handler = (e) => {
-        if (e) e.stopPropagation(); 
-        if (!playlists[category] || playlists[category].length === 0) { 
-            alert("No songs configured for category: " + category + ". Please add filenames to playlists in Relax.js"); 
-            return; 
-        }
-        currentCategory = category;
-        currentIndex = 0;
-        if (loadSong(currentCategory, currentIndex)){
-            showPlayer();
-            playSong();
-            document.querySelectorAll('.track-card').forEach(c => {
-            c.classList.remove('playing');
-            const btnImg = c.querySelector('.track-btn img');
-            if (btnImg) btnImg.src = "../src/ui/playBtn.png";
-            });
 
-            // Set this card to active + show PAUSE icon
-            card.classList.add('playing');
-            const activeBtnImg = card.querySelector('.track-btn img');
-            if (activeBtnImg) activeBtnImg.src = "../src/ui/pauseBtn.png";
-        }
-    };
-    card.addEventListener('click', handler);
-    if (btn) btn.addEventListener('click', handler);
+// click handlers for cards
+document.querySelectorAll('.track-card').forEach(card => {
+  const btn = card.querySelector('.track-btn');
+  const category = card.dataset.category;
+
+  const handler = (e) => {
+    if (e) e.stopPropagation();
+
+    if (!playlists[category] || playlists[category].length === 0) {
+      alert("No songs configured for category: " + category);
+      return;
+    }
+
+    // 🎲 Randomly pick an index for the chosen category
+    currentCategory = category;
+    currentIndex = Math.floor(Math.random() * playlists[currentCategory].length);
+
+    // Load + play the random song
+    if (loadSong(currentCategory, currentIndex)) {
+      showPlayer();
+      playSong();
+
+      // Reset all cards' play icons
+      document.querySelectorAll('.track-card').forEach(c => {
+        c.classList.remove('playing');
+        const btnImg = c.querySelector('.track-btn img');
+        if (btnImg) btnImg.src = "../src/ui/playBtn.png";
+      });
+
+      // Highlight this card + show pause icon
+      card.classList.add('playing');
+      const activeBtnImg = card.querySelector('.track-btn img');
+      if (activeBtnImg) activeBtnImg.src = "../src/ui/pauseBtn.png";
+    }
+  };
+
+  card.addEventListener('click', handler);
+  if (btn) btn.addEventListener('click', handler);
 });
+
 
 // player buttons
 playPauseBtn.addEventListener('click', (e)=>{
@@ -233,13 +252,13 @@ audio.addEventListener('timeupdate', ()=>{
     }
 });
 
-audio.addEventListener('ended', ()=>{
-    // auto play next in same category
-    if (!currentCategory) return;
-    const list = playlists[currentCategory];
-    currentIndex = (currentIndex + 1) % list.length;
-    if (loadSong(currentCategory, currentIndex)) playSong();
+audio.addEventListener('ended', () => {
+  if (!currentCategory) return;
+  const list = playlists[currentCategory];
+  currentIndex = Math.floor(Math.random() * list.length); // random next
+  if (loadSong(currentCategory, currentIndex)) playSong();
 });
+
 
 // seeking via range
 progressBar.addEventListener('input', ()=>{

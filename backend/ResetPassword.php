@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $check = $conn->prepare("SELECT signup_email FROM signup_web WHERE signup_email = ?");
+    $check = $conn->prepare("SELECT user_email FROM signup_web WHERE user_email = ?");
     $check->bind_param("s", $email);
     $check->execute();
     $check->store_result();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-    $update = $conn->prepare("UPDATE signup_web SET signup_pass=?, signup_compass=? WHERE signup_email=?");
+    $update = $conn->prepare("UPDATE signup_web SET user_pass=?, user_compass=? WHERE user_email=?");
     $update->bind_param("sss", $hashed_password, $hashed_password, $email);
 
     if ($update->execute()) {

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['Password']);
 
     // Check if the email exists
-    $stmt = $conn->prepare("SELECT signup_id, signup_username, signup_pass FROM signup_web WHERE signup_username = ?");
+    $stmt = $conn->prepare("SELECT user_id, user_username, user_pass FROM signup_web WHERE user_username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
@@ -33,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verify the entered password against hashed password
         if (password_verify($password, $hashed_password)) {
             // Login success
-            $_SESSION['signup_id'] = $db_id;
-            $_SESSION['signup_username'] = $db_username;
+            $_SESSION['user_id'] = $db_id;
+            $_SESSION['user_username'] = $db_username;
 
             echo "<script>
                     alert('✅ Login successful!');

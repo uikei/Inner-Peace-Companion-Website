@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Check if email already exists
-    $check = $conn->prepare("SELECT signup_email FROM signup_web WHERE signup_email = ?");
+    $check = $conn->prepare("SELECT user_email FROM user_web WHERE user_email = ?");
     $check->bind_param("s", $email);
     $check->execute();
     $check->store_result();
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert into database
-    $stmt = $conn->prepare("INSERT INTO signup_web (signup_email, signup_username, signup_pass) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO signup_web (user_email, user_username, user_pass) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $email, $username, $hashed_password);
 
 
