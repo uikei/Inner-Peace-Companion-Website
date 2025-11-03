@@ -8,11 +8,11 @@ $dbname = 'innerpeacecomp_web';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-$signup_id = $_SESSION['signup_id'];
+$user_id = $_SESSION['user_id'];
 
 // SQL with prepared statement 
-$stmt = $conn->prepare(query: "SELECT signup_username FROM signup_web WHERE signup_id = ?");
-$stmt->bind_param("i", $signup_id);
+$stmt = $conn->prepare(query: "SELECT user_username FROM signup_web WHERE user_id = ?");
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
@@ -22,7 +22,7 @@ if (!$row) {
     exit();
 }
 
-$current_username = $row['signup_username'];
+$current_username = $row['user_username'];
 
 ?>
 <!DOCTYPE html>

@@ -119,7 +119,7 @@
             </div>
             <div class="dropdown-content" id="zenDropdown">
                 <a href="../frontend/RelaxMode.php" class="dropdown-link font-medium">Relax Mode</a>
-                <a href="#" class="dropdown-link font-medium">Focus Mode</a>
+                <a href="../frontend/Focus Mode.php" class="dropdown-link font-medium">Focus Mode</a>
             </div>
         </div>
 
