@@ -26,7 +26,7 @@ loadEnv(__DIR__ . '/../.env');
 
 define('DB_HOST', 'localhost');
 define('DB_PORT', '3306'); 
-define('DB_NAME', 'chatbot');
+define('DB_NAME', 'innerpeacecomp_web');
 define('DB_USER', 'root'); // remove root **yukie**
 define('DB_PASS', 'root'); // same
 
@@ -46,7 +46,7 @@ if (file_exists($instructionsFile)) {
 // Session configuration
 session_start();
 
-// Database connection with MAMP port
+// Database connection 
 function getDBConnection() {
     try {
         $pdo = new PDO(
@@ -74,12 +74,14 @@ function getSessionId() {
         // Create session in database
         $pdo = getDBConnection();
         if ($pdo) {
+            $user_id = $_SESSION['user_id'] ?? null;
             $stmt = $pdo->prepare("
-                INSERT INTO chat_sessions (session_id, user_ip, user_agent) 
-                VALUES (?, ?, ?)
+                INSERT INTO chat_sessions (session_id, user_id, user_ip, user_agent) 
+                VALUES (?, ?, ?, ?)
             ");
             $stmt->execute([
                 $_SESSION['chatbot_session_id'],
+                $user_id,
                 $_SERVER['REMOTE_ADDR'] ?? 'unknown',
                 $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
             ]);

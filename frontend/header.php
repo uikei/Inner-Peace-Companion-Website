@@ -5,32 +5,36 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Get user data from database
-// Assuming you have user_id stored in session
 $user_id = $_SESSION['user_id'] ?? null;
 $user_name = '';
-$user_image = ''; // Default avatar
+$profile_pic = '../src/ui/icon.jpeg'; // Default fallback
 
 if ($user_id) {
-    // Include your database connection
-    // require_once 'config/db_connect.php';
-
-    // Example query (adjust based on your database structure)
-    // $query = "SELECT name, profile_image FROM users WHERE id = ?";
-    // $stmt = $conn->prepare($query);
-    // $stmt->bind_param("i", $user_id);
-    // $stmt->execute();
-    // $result = $stmt->get_result();
-    // $user = $result->fetch_assoc();
-    // $user_name = $user['name'];
-    // $user_image = $user['profile_image'];
-}
-
-$profile_pic = '../src/ui/icon.jpeg'; // Fallback
-
-if ($user_id && !empty($user_image)) {
-    // Check if custom image exists
-    if (file_exists($user_image)) {
-        $profile_pic = $user_image;
+    try {
+        // Database connection
+        $host = 'localhost';
+        $dbname = 'innerpeacecomp_web';
+        $db_username = 'root';
+        $db_password = 'root';
+        
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $db_username, $db_password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        // Query to get user profile picture
+        $stmt = $pdo->prepare("SELECT user_username, profile_picture FROM signup_web WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user) {
+            $user_name = $user['user_username'] ?? '';
+            
+            // Check if user has a custom profile picture
+            if (!empty($user['profile_picture']) && file_exists($user['profile_picture'])) {
+                $profile_pic = $user['profile_picture'];
+            }
+        }
+    } catch (PDOException $e) {
+        error_log("Database error in header: " . $e->getMessage());
     }
 }
 ?>
@@ -384,7 +388,7 @@ if ($user_id && !empty($user_image)) {
                     <span class="font-bold text-lg">Settings</span>
                 </a>
 
-                <a href="Edit_Profile.php" class="dropdown-item flex items-center justify-center gap-3">
+                <a href="editProfile.php" class="dropdown-item flex items-center justify-center gap-3">
                     <span class="font-bold text-lg">Edit Profile</span>
                 </a>
 
@@ -400,8 +404,8 @@ if ($user_id && !empty($user_image)) {
                 <div class="modal-message">
                     You are about to call emergency services.<br>
                     <strong>03-76272929 (befrienderskl)</strong> <br>
-                    <strong>More Info:</strong><br> <a
-                        href="https://www.befrienders.org.my/contact">https://www.befrienders.org.my/contact</a>
+                    <strong>More Info:</strong><br> <u> <a
+                        href="https://www.befrienders.org.my/contact">https://www.befrienders.org.my/contact</a> </u>
                 </div>
                 <div class="modal-buttons">
                     <button class="btn-continue" onclick="continueCall()">Continue</button>

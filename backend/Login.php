@@ -3,7 +3,7 @@ session_start();
 
 $servername = 'localhost';
 $username = 'root';
-$password = '';  // your database password
+$password = 'root';  // your database password
 $dbname = 'innerpeacecomp_web';  // same as your signup database
 
 // Create database connection
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "<script>
                     alert('✅ Login successful!');
-                    window.location.href = '../frontend/diary.php';
+                    window.location.href = '../frontend/home.php';
                   </script>";
         } else {
             // Wrong password

@@ -2,7 +2,7 @@
 
 $servername = 'localhost';
 $username = 'root';
-$password = '';     //Change this to your actual database password
+$password = 'root';     //Change this to your actual database password
 $dbname = 'innerpeacecomp_web';  //change it based on your database name
 
 //Create connection
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Check if email already exists
-    $check = $conn->prepare("SELECT user_email FROM user_web WHERE user_email = ?");
+    $check = $conn->prepare("SELECT user_email FROM signup_web WHERE user_email = ?");
     $check->bind_param("s", $email);
     $check->execute();
     $check->store_result();
@@ -44,8 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert into database
-    $stmt = $conn->prepare("INSERT INTO signup_web (user_email, user_username, user_pass) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $email, $username, $hashed_password);
+    // user_compass is set to the same as user_pass (hashed password)
+    $stmt = $conn->prepare("INSERT INTO signup_web (user_email, user_username, user_pass, user_compass) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $email, $username, $hashed_password, $hashed_password);
 
 
     if ($stmt->execute()) {

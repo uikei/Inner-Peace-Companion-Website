@@ -42,12 +42,15 @@ function handleSendMessage($input) {
         return;
     }
     
+    // Get user_id from session
+    $user_id = $_SESSION['user_id'] ?? null;
+    
     // Save user message
     $stmt = $pdo->prepare("
-        INSERT INTO chat_messages (session_id, message_type, message_content) 
-        VALUES (?, 'user', ?)
+        INSERT INTO chat_messages (session_id, user_id, message_type, message_content) 
+        VALUES (?, ?, 'user', ?)
     ");
-    $stmt->execute([$sessionId, $message]);
+    $stmt->execute([$sessionId, $user_id, $message]);
     
     // Get conversation history for context
     $history = getConversationHistory($pdo, $sessionId, 20);
@@ -58,10 +61,10 @@ function handleSendMessage($input) {
     if ($botResponse['success']) {
         // Save bot response
         $stmt = $pdo->prepare("
-            INSERT INTO chat_messages (session_id, message_type, message_content) 
-            VALUES (?, 'bot', ?)
+            INSERT INTO chat_messages (session_id, user_id, message_type, message_content) 
+            VALUES (?, ?, 'bot', ?)
         ");
-        $stmt->execute([$sessionId, $botResponse['message']]);
+        $stmt->execute([$sessionId, $user_id, $botResponse['message']]);
         
         echo json_encode([
             'success' => true,
