@@ -130,7 +130,7 @@
                 <span>Assistant</span>
             </div>
             <div class="dropdown-content" id="assistantDropdown">
-                <a href="user_trend.php" class="dropdown-link font-medium">User Trend</a>
+                <a href="user_trend.php" class="dropdown-link font-medium">Wellness Trends</a>
             </div>
         </div>
     </nav>

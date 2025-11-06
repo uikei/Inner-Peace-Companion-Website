@@ -1,7 +1,7 @@
 <?php
 $servername = 'localhost';
 $username = 'root';
-$password = '';
+$password = 'root';
 $dbname = 'innerpeacecomp_web';
 
 $conn = new mysqli($servername, $username, $password, $dbname);

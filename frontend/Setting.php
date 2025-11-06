@@ -70,7 +70,7 @@ $username = $_SESSION['user_username'] ?? null;
     <div class="container">
         <h2>Hello, <?php echo $username; ?></h2>
 
-        <button class="btn edit" onclick="window.location.href='Edit_Profile.php'">Edit Profile</button>
+        <button class="btn edit" onclick="window.location.href='Edit_Account.php'">Edit Account</button>
         <button class="btn report" onclick="window.location.href='report.php'">Generate Report</button>
         <button class="btn logout" onclick="window.location.href='Logout.php'">Logout</button>
     </div>

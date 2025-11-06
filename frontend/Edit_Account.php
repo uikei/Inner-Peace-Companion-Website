@@ -3,7 +3,7 @@ session_start();
 
 $servername = 'localhost';
 $username = 'root';
-$password = '';
+$password = 'root';
 $dbname = 'innerpeacecomp_web';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -76,7 +76,7 @@ $current_username = $row['user_username'];
     <div class="banner">Edit Profile</div>
 
     <div class="container">
-        <form action="Update_Profile.php" method="post">
+        <form action="Update_Account.php" method="post">
             <label>Username</label>
             <input type="text" name="new_username" value="<?php echo $current_username; ?>" required>
 
