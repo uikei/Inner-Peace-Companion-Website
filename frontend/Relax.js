@@ -1,5 +1,4 @@
 // RelaxMode.js 
-// //Mini Player 
 // //Maximum 3 folder (Moditate, Sleep, Calm)
 
 const audio = document.getElementById("audioPlayer"); 
@@ -132,7 +131,6 @@ function basenameNoExt(filename){
     return filename.replace(/\.[^/.]+$/, ""); 
 }
 
-// Load song by category + index
 // Load song by category + index
 function loadSong(category, index){ 
     if (!playlists[category] || !playlists[category][index]) return false;
