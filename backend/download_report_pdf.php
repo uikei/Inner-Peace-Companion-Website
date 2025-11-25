@@ -93,9 +93,31 @@ $pdf->Cell(0, 10, 'Detailed Analysis', 0, 1, 'L');
 $pdf->SetFont('helvetica', '', 11);
 $pdf->SetTextColor(0, 0, 0);
 
-// Convert line breaks to HTML and write the report content
-$content = nl2br(htmlspecialchars($report['content']));
-$content = '<div style="text-align: justify; line-height: 1.6;">' . $content . '</div>';
+// Function to convert markdown to HTML for PDF
+function formatMarkdownForPDF($text) {
+    // Convert markdown headers to HTML with proper styling for PDF
+    // ### Header (h3)
+    $text = preg_replace('/^### (.+)$/m', '<h3 style="font-size: 14pt; font-weight: bold; margin-top: 10px; margin-bottom: 5px; color: #40350A;">$1</h3>', $text);
+    
+    // ## Header (h2)
+    $text = preg_replace('/^## (.+)$/m', '<h2 style="font-size: 16pt; font-weight: bold; margin-top: 12px; margin-bottom: 6px; color: #40350A;">$1</h2>', $text);
+    
+    // # Header (h1)
+    $text = preg_replace('/^# (.+)$/m', '<h1 style="font-size: 18pt; font-weight: bold; margin-top: 15px; margin-bottom: 8px; color: #40350A;">$1</h1>', $text);
+    
+    // Convert **bold** to <strong>
+    $text = preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $text);
+    
+    // Convert *italic* to <em>
+    $text = preg_replace('/\*(.+?)\*/s', '<em>$1</em>', $text);
+    
+    return $text;
+}
+
+// Convert line breaks to HTML and format markdown
+$content = formatMarkdownForPDF($report['content']);
+$content = nl2br(htmlspecialchars($content));
+$content = '<div style="text-align: justify; line-height: 1.6;">' . htmlspecialchars_decode($content) . '</div>';
 
 $pdf->writeHTML($content, true, false, true, false, '');
 

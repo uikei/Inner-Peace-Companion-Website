@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $host = 'localhost';
 $dbname = 'innerpeacecomp_web';
 $db_username = 'root';
-$db_password = 'root';
+$db_password = '';
 
 header('Content-Type: application/json');
 

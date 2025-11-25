@@ -151,52 +151,15 @@
                     <h3 class="text-xl font-semibold text-[#40350A]">AI-Powered Insights</h3>
                 </div>
                 <div id="aiAnalysis" class="space-y-4">
-                    <?php if ($analysis): ?>
-                        <?php if (!empty($analysis['positive'])): ?>
-                        <div class="bg-green-50 border-l-4 border-green-500 p-4">
-                            <h4 class="font-semibold text-green-800 mb-2">Positive Progress</h4>
-                            <p class="text-green-700"><?php echo nl2br(htmlspecialchars($analysis['positive'])); ?></p>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($analysis['observations'])): ?>
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
-                            <h4 class="font-semibold text-blue-800 mb-2">Key Observations</h4>
-                            <ul class="text-blue-700 space-y-2">
-                                <?php foreach ($analysis['observations'] as $obs): ?>
-                                    <?php if (!empty(trim($obs))): ?>
-                                    <li><?php echo htmlspecialchars($obs); ?></li>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($analysis['suggestions'])): ?>
-                        <div class="bg-purple-50 border-l-4 border-purple-500 p-4">
-                            <h4 class="font-semibold text-purple-800 mb-2">Personalized Suggestions</h4>
-                            <ul class="text-purple-700 space-y-2">
-                                <?php foreach ($analysis['suggestions'] as $sug): ?>
-                                    <?php if (!empty(trim($sug))): ?>
-                                    <li><?php echo htmlspecialchars($sug); ?></li>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($analysis['reminders'])): ?>
-                        <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
-                            <h4 class="font-semibold text-yellow-800 mb-2">Gentle Reminders</h4>
-                            <p class="text-yellow-700"><?php echo nl2br(htmlspecialchars($analysis['reminders'])); ?></p>
-                        </div>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <div class="flex items-center justify-center py-8">
-                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700"></div>
-                            <span class="ml-3 text-[#706F4E]">Analyzing your wellness data...</span>
-                        </div>
-                    <?php endif; ?>
+                    <!-- Loading state -->
+                    <div id="aiLoading" class="flex flex-col items-center justify-center py-12">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#778970] mb-4"></div>
+                        <span class="text-[#706F4E] text-lg">Generating AI insights...</span>
+                        <span class="text-[#706F4E] text-sm mt-2">This may take a few moments</span>
+                    </div>
+                    
+                    <!-- Analysis content (hidden initially) -->
+                    <div id="aiContent" class="hidden"></div>
                 </div>
             </div>
 
@@ -316,6 +279,86 @@
                     }
                 }
             }
+        });
+        
+        // Load AI Analysis asynchronously
+        async function loadAIAnalysis() {
+            const weekIndex = <?php echo $week_index; ?>;
+            const loadingDiv = document.getElementById('aiLoading');
+            const contentDiv = document.getElementById('aiContent');
+            
+            try {
+                const response = await fetch(`../backend/api_usertrend_analysis.php?week_index=${weekIndex}`);
+                const data = await response.json();
+                
+                if (data.success && data.analysis) {
+                    const analysis = data.analysis;
+                    let html = '';
+                    
+                    if (analysis.positive && analysis.positive.trim()) {
+                        html += `
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                                <h4 class="font-semibold text-green-800 mb-2">User Progress</h4>
+                                <p class="text-green-700">${escapeHtml(analysis.positive).replace(/\n/g, '<br>')}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    if (analysis.observations && analysis.observations.length > 0) {
+                        html += `
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                                <h4 class="font-semibold text-blue-800 mb-2">Key Observations</h4>
+                                <ul class="text-blue-700 space-y-2">
+                                    ${analysis.observations.map(obs => obs.trim() ? `<li>${escapeHtml(obs)}</li>` : '').join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                    
+                    if (analysis.suggestions && analysis.suggestions.length > 0) {
+                        html += `
+                            <div class="bg-purple-50 border-l-4 border-purple-500 p-4">
+                                <h4 class="font-semibold text-purple-800 mb-2">Personalized Suggestions</h4>
+                                <ul class="text-purple-700 space-y-2">
+                                    ${analysis.suggestions.map(sug => sug.trim() ? `<li>${escapeHtml(sug)}</li>` : '').join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                    
+                    if (analysis.reminders && analysis.reminders.trim()) {
+                        html += `
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                                <h4 class="font-semibold text-yellow-800 mb-2">Gentle Reminders</h4>
+                                <p class="text-yellow-700">${escapeHtml(analysis.reminders).replace(/\n/g, '<br>')}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    contentDiv.innerHTML = html || '<p class="text-center text-[#706F4E]">No insights available at this time.</p>';
+                } else {
+                    contentDiv.innerHTML = '<p class="text-center text-red-600">Unable to load AI insights. Please try refreshing the page.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading AI analysis:', error);
+                contentDiv.innerHTML = '<p class="text-center text-red-600">Error loading AI insights. Please try again later.</p>';
+            } finally {
+                loadingDiv.classList.add('hidden');
+                contentDiv.classList.remove('hidden');
+            }
+        }
+        
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Load AI analysis after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a brief moment to let charts render first
+            setTimeout(loadAIAnalysis, 500);
         });
     </script>
 </body>

@@ -11,13 +11,13 @@ $user_id = $_SESSION['user_id'];
 $host = 'localhost';
 $dbname = 'innerpeacecomp_web';
 $db_username = 'root';
-$db_password = 'root';
+$db_password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $db_username, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Check if user has completed screening in the last 2 weeks
+    // Check if user has completed screening in the last week
     $stmt = $pdo->prepare("
         SELECT MAX(created_at) as last_screening 
         FROM (
@@ -40,10 +40,10 @@ try {
         $interval = $today->diff($last_date);
         $days_passed = $interval->days;
         
-        // User must wait 14 days (2 weeks) between screenings
-        if ($days_passed < 14) {
+        // User must wait 7 days (1 week) between screenings
+        if ($days_passed < 7) {
             $can_take_screening = false;
-            $days_until_next = 14 - $days_passed;
+            $days_until_next = 7 - $days_passed;
             $screening_message = "You last completed the screening " . $days_passed . " day(s) ago. Please come back in " . $days_until_next . " day(s) to take the screening again.";
         }
     }
@@ -92,7 +92,7 @@ try {
                 <p class="text-[#706F4E] text-lg mb-6"><?php echo htmlspecialchars($screening_message); ?></p>
                 <div class="bg-[#EAEEEB] p-6 rounded-lg mb-6">
                     <p class="text-[#40350A] font-semibold mb-2">📋 Screening Schedule</p>
-                    <p class="text-[#706F4E] text-sm">Mental health screenings must be completed every 2 weeks to help track your mental wellness journey.</p>
+                    <p class="text-[#706F4E] text-sm">Mental health screenings must be completed every week to help track your mental wellness journey.</p>
                 </div>
                 <a href="home.php" class="inline-block bg-[#778970] text-[#F5F2E9] px-10 py-4 rounded-lg text-base font-semibold hover:bg-[#5D6A58] transition transform hover:-translate-y-0.5 hover:shadow-lg">
                     Return to Home
@@ -104,7 +104,7 @@ try {
         <!-- Start Screen -->
         <div id="startSection" class="form-section">
             <h1 class="flex justify-center items-center text-3xl font-semibold text-[#40350A] mb-3">Mental Health Assessment</h1>
-            <p class="flex justify-center items-center text-[#706F4E] mb-3">*You are required to perform the assessment every 2 weeks*</p>
+            <p class="flex justify-center items-center text-[#706F4E] mb-3">*You are required to perform the assessment every week*</p>
             <div class="flex justify-center items-center">
                <button onclick="startQuestionnaire()" class="bg-[#778970] text-[#F5F2E9] px-10 py-4 rounded-lg text-base font-semibold hover:  transition transform hover:-translate-y-0.5 hover:shadow-lg">
                 Start Assessment

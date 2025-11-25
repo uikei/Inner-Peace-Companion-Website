@@ -1,11 +1,11 @@
 <?php
-// config.php - Database configuration
+
 session_start();
 
 $host = 'localhost';
 $dbname = 'innerpeacecomp_web';
 $username = 'root';
-$password = 'root';
+$password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

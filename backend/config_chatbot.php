@@ -28,7 +28,7 @@ define('DB_HOST', 'localhost');
 define('DB_PORT', '3306'); 
 define('DB_NAME', 'innerpeacecomp_web');
 define('DB_USER', 'root'); // remove root **yukie**
-define('DB_PASS', 'root'); // same
+define('DB_PASS', ''); // same
 
 // Claude API configuration
 define('CLAUDE_API_KEY', getenv('API_KEY'));

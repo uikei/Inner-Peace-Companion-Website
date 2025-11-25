@@ -277,6 +277,26 @@ function analyzeTrend($scores) {
     return 'Stable';
 }
 
+function formatMarkdownToHTML($text) {
+    // Convert markdown headers to HTML with proper styling
+    // ### Header (h3) - largest sub-heading
+    $text = preg_replace('/^### (.+)$/m', '<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #40350A;">$1</h3>', $text);
+    
+    // ## Header (h2) - larger heading
+    $text = preg_replace('/^## (.+)$/m', '<h2 style="font-size: 1.75em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #40350A;">$1</h2>', $text);
+    
+    // # Header (h1) - main heading
+    $text = preg_replace('/^# (.+)$/m', '<h1 style="font-size: 2em; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.5em; color: #40350A;">$1</h1>', $text);
+    
+    // Convert **bold** to <strong>
+    $text = preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $text);
+    
+    // Convert *italic* to <em>
+    $text = preg_replace('/\*(.+?)\*/s', '<em>$1</em>', $text);
+    
+    return $text;
+}
+
 // Generate report if requested
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_report'])) {
     $date_range = getDateRange($report_type);
@@ -415,11 +435,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_report'])) {
                         </div>
                     </div>
 
-                    <button type="submit" name="generate_report" class="w-full bg-[#778970] text-white py-4 rounded-lg font-semibold hover:bg-[#5D6A58] transition transform hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <input type="hidden" name="generate_report" value="1">
+                    <button type="submit" id="generateReportBtn" class="w-full bg-[#778970] text-white py-4 rounded-lg font-semibold hover:bg-[#5D6A58] transition transform hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                        <svg class="w-5 h-5 mr-2" id="reportIcon" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"/>
                         </svg>
-                        Generate My Wellness Report
+                        <div class="hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" id="reportSpinner"></div>
+                        <span id="reportBtnText">Generate My Wellness Report</span>
                     </button>
                 </form>
             </div>
@@ -473,7 +495,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_report'])) {
                 <!-- Report Content -->
                 <div class="bg-white rounded-xl shadow-md p-12">
                     <div class="prose prose-lg max-w-none">
-                        <?php echo nl2br(htmlspecialchars($generated_report['content'])); ?>
+                        <?php 
+                            $formatted_content = formatMarkdownToHTML($generated_report['content']);
+                            echo nl2br(htmlspecialchars_decode($formatted_content)); 
+                        ?>
                     </div>
                 </div>
 
@@ -488,5 +513,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_report'])) {
             <?php endif; ?>
         </div>
     </div>
+    <script>
+        // Report generation loading state
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('#generateReportBtn')?.closest('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const btn = document.getElementById('generateReportBtn');
+                    const icon = document.getElementById('reportIcon');
+                    const spinner = document.getElementById('reportSpinner');
+                    const btnText = document.getElementById('reportBtnText');
+                    
+                    if (btn && icon && spinner && btnText) {
+                        // Disable button and show loading state
+                        btn.disabled = true;
+                        icon.classList.add('hidden');
+                        spinner.classList.remove('hidden');
+                        btnText.textContent = 'Generating Report...';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 $host = 'localhost';
 $dbname = 'innerpeacecomp_web';
 $db_username = 'root';
-$db_password = 'root';
+$db_password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $db_username, $db_password);
@@ -196,7 +196,7 @@ function getRiskColor($severity) {
                     </div>
                     
                     <div class="mt-4 text-center">
-                        <a href="journal.php" class="text-sm text-[#40350A] hover:text-[#778970] font-medium">
+                        <a href="diary.php" class="text-sm text-[#40350A] hover:text-[#778970] font-medium">
                             View All Journal Entries →
                         </a>
                     </div>
