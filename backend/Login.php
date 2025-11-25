@@ -3,7 +3,7 @@ session_start();
 
 $servername = 'localhost';
 $username = 'root';
-$password = 'root';  // your database password
+$password = '';  // your database password
 $dbname = 'innerpeacecomp_web';  // same as your signup database
 
 // Create database connection
@@ -32,6 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify the entered password against hashed password
         if (password_verify($password, $hashed_password)) {
+            // Clear any existing chatbot session to prevent chat history from persisting
+            unset($_SESSION['chatbot_session_id']);
+            
             // Login success
             $_SESSION['user_id'] = $db_id;
             $_SESSION['user_username'] = $db_username;

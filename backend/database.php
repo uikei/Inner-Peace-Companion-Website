@@ -8,7 +8,7 @@
 $host = 'localhost';      // or '127.0.0.1'
 $dbname = 'innerpeacecomp_web';
 $username = 'root';       // your database username
-$password = 'root';         
+$password = '';         
 $port = '3306';       
 
 // For MAMP users, uncomment this line:

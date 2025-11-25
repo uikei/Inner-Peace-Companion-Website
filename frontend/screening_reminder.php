@@ -11,13 +11,13 @@ $user_id = $_SESSION['user_id'];
 $host = 'localhost';
 $dbname = 'innerpeacecomp_web';
 $db_username = 'root';
-$db_password = 'root';
+$db_password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $db_username, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Check if user has completed screening in the last 2 weeks
+    // Check if user has completed screening in the last week
     $stmt = $pdo->prepare("
         SELECT MAX(created_at) as last_screening 
         FROM (
@@ -39,8 +39,8 @@ try {
         $interval = $today->diff($last_date);
         $days_passed = $interval->days;
         
-        // User must wait 14 days (2 weeks) between screenings
-        if ($days_passed < 14) {
+        // User must wait 7 days (1 week) between screenings
+        if ($days_passed < 7) {
             $needs_screening = false;
         }
     }

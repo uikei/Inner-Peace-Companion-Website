@@ -2,7 +2,7 @@
 
 $servername = 'localhost';
 $username = 'root';
-$password = 'root';     //Change this to your actual database password
+$password = '';     //Change this to your actual database password
 $dbname = 'innerpeacecomp_web';  //change it based on your database name
 
 //Create connection

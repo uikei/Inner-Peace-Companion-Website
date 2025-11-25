@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'innerpeacecomp_web';
 $username = 'root';
-$password = 'root';
+$password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
