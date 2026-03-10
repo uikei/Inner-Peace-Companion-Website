@@ -24,11 +24,11 @@ function loadEnv($path) {
 
 loadEnv(__DIR__ . '/../.env');
 
-define('DB_HOST', 'localhost');
-define('DB_PORT', '3306'); 
-define('DB_NAME', 'innerpeacecomp_web');
-define('DB_USER', 'root'); // remove root **yukie**
-define('DB_PASS', ''); // same
+define('DB_HOST', getenv('DB_HOST'));
+define('DB_PORT', getenv('DB_PORT')); 
+define('DB_NAME', getenv('DB_DATABASE'));
+define('DB_USER', getenv('DB_USERNAME')); 
+define('DB_PASS', getenv('DB_PASSWORD')); 
 
 // Claude API configuration
 define('CLAUDE_API_KEY', getenv('API_KEY'));
