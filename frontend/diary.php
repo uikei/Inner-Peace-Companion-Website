@@ -69,6 +69,61 @@ $emotionMap = [
         /*border-color: #86a789;*/
         background: rgba(255, 255, 255, 0.5);
       }
+
+      /* Kebab dropdown styles */
+      .kebab-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+      .kebab-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 22px;
+        color: #555;
+        padding: 2px 8px;
+        border-radius: 6px;
+        line-height: 1;
+        transition: background 0.2s;
+      }
+      .kebab-btn:hover {
+        background: #f0f0f0;
+      }
+      .kebab-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 110%;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+        min-width: 140px;
+        z-index: 999;
+        overflow: hidden;
+      }
+      .kebab-menu.open {
+        display: block;
+      }
+      .kebab-menu button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 11px 18px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        text-align: left;
+        transition: background 0.15s;
+      }
+      .kebab-menu button:hover {
+        background: #f5f5f5;
+      }
+      .kebab-menu button.delete-btn {
+        color: #d9534f;
+      }
     </style>
   </head>
   <body>
@@ -279,17 +334,28 @@ $emotionMap = [
       <!-- View Journal Modal -->
       <div
         id="viewModal"
+        data-journal-id=""
         class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50"
       >
         <div
           class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-4 relative"
         >
-          <button
-            onclick="closeViewModal()"
-            class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-3xl"
-          >
-            &times;
-          </button>
+          <!-- Top-right controls: kebab menu + close -->
+          <div class="absolute top-4 right-4 flex items-center gap-2">
+            <!-- ... menu -->
+            <div class="kebab-wrapper">
+              <button class="kebab-btn" onclick="toggleKebabMenu(event)" title="Options">&#8942;</button>
+              <div id="kebabMenu" class="kebab-menu">
+                <button onclick="openEditFromView()">Edit</button>
+                <button class="delete-btn" onclick="deleteJournal()">Delete</button>
+              </div>
+            </div>
+            <!-- close -->
+            <button
+              onclick="closeViewModal()"
+              class="text-gray-500 hover:text-gray-700 text-3xl leading-none"
+            >&times;</button>
+          </div>
 
           <div class="p-8">
             <div
@@ -306,6 +372,59 @@ $emotionMap = [
               id="viewContent"
               class="whitespace-pre-wrap text-gray-700 leading-relaxed max-h-96 overflow-y-auto"
             ></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Journal Modal -->
+      <div
+        id="editModal"
+        class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      >
+        <div class="bg-[#B9C5B4] rounded-lg p-8 w-full max-w-3xl mx-4">
+          <h2 class="text-2xl font-semibold text-[#40350A] mb-4">Edit Journal</h2>
+
+          <input
+            type="text"
+            id="editTitle"
+            class="w-full p-3 rounded-lg border-2 border-gray-300 mb-4 focus:outline-none focus:border-[#86a789]"
+            placeholder="Journal title..."
+          />
+
+          <div class="mb-4">
+            <label class="text-[#40350A] font-medium mb-2 block">How are you feeling:</label>
+            <div class="flex gap-2" id="editEmotionBtns">
+              <button type="button" class="emotion-btn" data-edit-emotion="happy" onclick="selectEditEmotion('happy')">
+                <img src="../src/journalAsset/emotions/happy.png" alt="happy" title="happy" />
+              </button>
+              <button type="button" class="emotion-btn" data-edit-emotion="sad" onclick="selectEditEmotion('sad')">
+                <img src="../src/journalAsset/emotions/cry.png" alt="sad" title="sad" />
+              </button>
+              <button type="button" class="emotion-btn" data-edit-emotion="angry" onclick="selectEditEmotion('angry')">
+                <img src="../src/journalAsset/emotions/angry.png" alt="angry" title="angry" />
+              </button>
+              <button type="button" class="emotion-btn" data-edit-emotion="anxious" onclick="selectEditEmotion('anxious')">
+                <img src="../src/journalAsset/emotions/worried.png" alt="anxious" title="anxious" />
+              </button>
+            </div>
+          </div>
+
+          <textarea
+            id="editText"
+            rows="12"
+            class="w-full p-4 rounded-lg border-2 border-gray-300 mb-4 focus:outline-none focus:border-[#86a789] resize-none"
+            placeholder="Write your thoughts here..."
+          ></textarea>
+
+          <div class="flex gap-4 justify-end">
+            <button
+              onclick="closeEditModal()"
+              class="px-6 py-2 bg-[#A6B3A0] text-[#F5F2E9]/60 font-semibold rounded-lg hover:bg-[#7F8C79] transition"
+            >Cancel</button>
+            <button
+              onclick="submitEdit()"
+              class="px-6 py-2 bg-[#778970] text-[#F5F2E9] font-semibold rounded-lg hover:bg-[#5D6A58] transition"
+            >Save Changes</button>
           </div>
         </div>
       </div>

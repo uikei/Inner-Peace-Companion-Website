@@ -9,13 +9,14 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$host = 'localhost';
-$dbname = 'innerpeacecomp_web';
-$db_username = 'root';
-$db_password = '';
+require_once __DIR__ . '/../backend/env.php';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $db_username, $db_password);
+    $pdo = new PDO(
+        "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']};charset=utf8mb4",
+        $_ENV['DB_USERNAME'],
+        $_ENV['DB_PASSWORD']
+    );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Get username

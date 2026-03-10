@@ -85,5 +85,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
+// Handle POST request (delete journal)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $journal_id = intval($_POST['id'] ?? 0);
+
+    if (!$journal_id) {
+        echo json_encode(['success' => false, 'message' => 'Journal ID required']);
+        exit;
+    }
+
+    try {
+        // Only delete if journal belongs to current user
+        $stmt = $pdo->prepare("DELETE FROM journals WHERE journal_id = ? AND user_id = ?");
+        $stmt->execute([$journal_id, $user_id]);
+
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(['success' => true, 'message' => 'Journal deleted successfully']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Journal not found or unauthorized']);
+        }
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
+// Handle POST request (update/edit journal)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update') {
+    $journal_id = intval($_POST['id'] ?? 0);
+    $title      = trim($_POST['title'] ?? '');
+    $emotion    = trim($_POST['emotion'] ?? '');
+    $text       = trim($_POST['text'] ?? '');
+
+    if (!$journal_id || empty($title) || empty($emotion) || empty($text)) {
+        echo json_encode(['success' => false, 'message' => 'All fields are required']);
+        exit;
+    }
+
+    $validEmotions = ['happy', 'sad', 'angry', 'anxious'];
+    if (!in_array($emotion, $validEmotions)) {
+        echo json_encode(['success' => false, 'message' => 'Invalid emotion']);
+        exit;
+    }
+
+    try {
+        $stmt = $pdo->prepare("UPDATE journals SET journal_title = ?, emotion = ?, diary_text = ? WHERE journal_id = ? AND user_id = ?");
+        $stmt->execute([$title, $emotion, $text, $journal_id, $user_id]);
+
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(['success' => true, 'message' => 'Journal updated successfully']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Journal not found or no changes made']);
+        }
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
 echo json_encode(['success' => false, 'message' => 'Invalid request']);
 ?>

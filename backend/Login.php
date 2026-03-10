@@ -1,13 +1,14 @@
 <?php
 session_start();
+require_once __DIR__ . '/env.php';
 
-$servername = 'localhost';
-$username = 'root';
-$password = '';  // your database password
-$dbname = 'innerpeacecomp_web';  // same as your signup database
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create database connection using .env credentials
+$conn = new mysqli(
+    $_ENV['DB_HOST'],
+    $_ENV['DB_USERNAME'],
+    $_ENV['DB_PASSWORD'],
+    $_ENV['DB_DATABASE']
+);
 
 // Check connection
 if ($conn->connect_error) {
