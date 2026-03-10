@@ -4,13 +4,14 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: Login.html");
     exit();
 }
+require_once __DIR__ . '/../backend/env.php';
 
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'innerpeacecomp_web';
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(
+    $_ENV['DB_HOST'],
+    $_ENV['DB_USERNAME'],
+    $_ENV['DB_PASSWORD'],
+    $_ENV['DB_DATABASE']
+);
 
 $user_id = $_SESSION['user_id'];
 $new_username = trim($_POST['new_username']);

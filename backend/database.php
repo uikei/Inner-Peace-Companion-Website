@@ -4,18 +4,11 @@
  * PDO connection for innerpeacecomp_web database
  */
 
-// Database credentials
-$host = 'localhost';      // or '127.0.0.1'
-$dbname = 'innerpeacecomp_web';
-$username = 'root';       // your database username
-$password = '';         
-$port = '3306';       
-
-// For MAMP users, uncomment this line:
-// $port = '8889';
+// Database credentials — loaded from .env
+require_once __DIR__ . '/env.php';
 
 // DSN (Data Source Name)
-$dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+$dsn = "mysql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']};dbname={$_ENV['DB_DATABASE']};charset=utf8mb4";
 
 // PDO options
 $options = [

@@ -11,13 +11,13 @@ $profile_pic = '../src/ui/icon.jpeg'; // Default fallback
 
 if ($user_id) {
     try {
-        // Database connection
-        $host = 'localhost';
-        $dbname = 'innerpeacecomp_web';
-        $db_username = 'root';
-        $db_password = '';
-        
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $db_username, $db_password);
+        // Database connection — credentials from .env
+        require_once __DIR__ . '/../backend/env.php';
+        $pdo = new PDO(
+            "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']};charset=utf8mb4",
+            $_ENV['DB_USERNAME'],
+            $_ENV['DB_PASSWORD']
+        );
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         // Query to get user profile picture

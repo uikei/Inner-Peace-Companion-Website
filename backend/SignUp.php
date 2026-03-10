@@ -1,12 +1,13 @@
 <?php
+require_once __DIR__ . '/env.php';
 
-$servername = 'localhost';
-$username = 'root';
-$password = '';     //Change this to your actual database password
-$dbname = 'innerpeacecomp_web';  //change it based on your database name
-
-//Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection using .env credentials
+$conn = new mysqli(
+    $_ENV['DB_HOST'],
+    $_ENV['DB_USERNAME'],
+    $_ENV['DB_PASSWORD'],
+    $_ENV['DB_DATABASE']
+);
 
 //Check connection
 if ($conn->connect_error) {
