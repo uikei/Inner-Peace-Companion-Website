@@ -20,7 +20,8 @@ $options = [
 
 try {
     // Create PDO instance
-    $pdo = new PDO($dsn, $username, $password, $options);
+    //$pdo = new PDO($dsn, $username, $password, $options);
+    $pdo = new PDO($dsn, $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $options);
     
     // Optional: uncomment to debug connection
     // echo "Database connected successfully!";
